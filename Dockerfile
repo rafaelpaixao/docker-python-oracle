@@ -1,10 +1,5 @@
 ARG PYTHON_VERSION=3.8
 FROM python:${PYTHON_VERSION}
-RUN apt-get update \
-	&& apt-get -yq install unzip \
-	&& apt-get -yq install libaio1 \
-	&& apt-get -yq autoremove \
-	&& apt-get clean
 
 # ORACLE SETUP
 # Variables
@@ -15,6 +10,9 @@ ENV SDK_ZIP=instantclient-sdk-linux.x64-${ORACLE_VERSION}.zip
 ENV ORACLE_HOME /opt/oracle
 ENV TNS_ADMIN ${ORACLE_HOME}/network/admin
 # Steps
+RUN apt-get update \
+	&& apt-get -yq install unzip \
+	&& apt-get -yq install libaio1
 WORKDIR /oracle_setup
 COPY assets/oracle/${CLIENT_ZIP} .
 COPY assets/oracle/${SDK_ZIP} .
@@ -25,7 +23,10 @@ VOLUME ["${TNS_ADMIN}"]
 RUN echo ${ORACLE_HOME} > /etc/ld.so.conf.d/oracle.conf \
 	&& mkdir -p ${TNS_ADMIN} \
 	&& ldconfig \
-	&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # Python
 RUN pip install cx_oracle
 
+# CLEAN UP
+RUN apt-get -yq autoremove \
+	&& apt-get clean \
+	&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
