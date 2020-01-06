@@ -43,13 +43,14 @@ docker with python and oracle instant client
 
   - PYTHON_SQL_VERSION
 
+- Create a test.env file from test.env.example
 - Run a test (example):
 
   ```
-  docker run --rm -e "ORACLE_CON_STR=YourUserNameHere/YourPasswordHere@IpAddressOrHostnameOfOracleServerHere/OracleInstanceNameHere" pythontest
+  docker run --rm --env-file test.env pythontest
   ```
 
-- Result should be the version of the Oracle server.
+- Result should be the version of the Oracle server and the version of the SQL Server
 
 ## Other files in the folder:
 

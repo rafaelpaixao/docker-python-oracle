@@ -22,9 +22,23 @@ RUN mv ${ORACLE_ZIP_INTERNAL_FOLDER} ${ORACLE_HOME}
 VOLUME ["${TNS_ADMIN}"]
 RUN echo ${ORACLE_HOME} > /etc/ld.so.conf.d/oracle.conf \
 	&& mkdir -p ${TNS_ADMIN} \
-	&& ldconfig \
-# Python
+	&& ldconfig
+# Install Oracle connector module
 RUN pip install cx_oracle
+
+# SQL SERVER SETUP
+# adding custom MS repository
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+RUN curl https://packages.microsoft.com/config/ubuntu/19.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+# install SQL Server depencencies
+RUN apt-get update \
+	&& apt-get install -yq curl apt-utils apt-transport-https debconf-utils gcc build-essential locales \
+	&& ACCEPT_EULA=Y apt-get install -y msodbcsql17 unixodbc-dev mssql-tools 
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+RUN /bin/bash -c "source ~/.bashrc"
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen
+# install SQL Server Python SQL Server connector module - pyodbc
+RUN pip install pyodbc
 
 # CLEAN UP
 RUN apt-get -yq autoremove \
