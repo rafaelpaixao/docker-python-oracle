@@ -23,8 +23,6 @@ VOLUME ["${TNS_ADMIN}"]
 RUN echo ${ORACLE_HOME} > /etc/ld.so.conf.d/oracle.conf \
 	&& mkdir -p ${TNS_ADMIN} \
 	&& ldconfig
-# Install Oracle connector module
-RUN pip install cx_oracle
 
 # SQL SERVER SETUP
 # adding custom MS repository
@@ -37,8 +35,6 @@ RUN apt-get update \
 RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 RUN /bin/bash -c "source ~/.bashrc"
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen
-# install SQL Server Python SQL Server connector module - pyodbc
-RUN pip install pyodbc
 
 # CLEAN UP
 RUN apt-get -yq autoremove \
