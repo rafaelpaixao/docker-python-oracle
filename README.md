@@ -1,32 +1,28 @@
-# docker-python-oracle
+# docker-python-sql
 
 docker with python and oracle instant client
 
 # Tags
 
-- docker-python-oracle:python3.5-oracle12.2
-- docker-python-oracle:python3.6-oracle12.2
-- docker-python-oracle:python3.6.6-oracle12.2
+- python-sql:1.0
 
 # How to build
 
 - Download oracle linux client zips from http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html
 
   - Be sure to get the Basic Light Package and the SDK
-  - Place the files in the same folder as the Dockerfile
+  - Place the files in "assets\oracle"
 
 - Populate the variables in the following command:
 
   ```
-  docker build -t python-oracle:AAA-BBB .
+  docker build -t python-sql:AAA .
   ```
 
-  - AAA - python version - eg 3.8
-  - BBB - oracle short version - eg 19.5
+  - AAA - version - eg 1.0
 
 - Available build args:
 
-  - UBUNTU_VERSION
   - PYTHON_VERSION
   - ORACLE_VERSION
   - ORACLE_ZIP_INTERNAL_FOLDER
@@ -45,7 +41,7 @@ docker with python and oracle instant client
 
   Available build args:
 
-  - PYTHON_ORACLE_VERSION
+  - PYTHON_SQL_VERSION
 
 - Run a test (example):
 
@@ -57,5 +53,4 @@ docker with python and oracle instant client
 
 ## Other files in the folder:
 
-- main.py - python based test script.
 - alpine.broken.Dockerfile - attempt to build the python container using alpine (reduces the container image size).
