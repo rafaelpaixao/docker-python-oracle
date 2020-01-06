@@ -1,7 +1,6 @@
-FROM python-oracle:3.5-12.2
-ADD requirements.txt /app/
-WORKDIR /app
-RUN apk --no-cache add build-base && pip install -r requirements.txt
+ARG PYTHON_ORACLE_VERSION=latest
+FROM python-oracle:${PYTHON_ORACLE_VERSION}
+RUN pip install cx_oracle
 
 ADD . /app
 

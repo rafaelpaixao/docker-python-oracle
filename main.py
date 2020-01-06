@@ -1,6 +1,8 @@
 import cx_Oracle
 import os
-constr = os.getenv('ORACLE_CON_STR', 'Please set ORACLE_CON_STR environment variable to the connection string, then re-invoke')
-con = cx_Oracle.connect(constr)
+
+
+ORACLE_CON_STR = os.environ.get('ORACLE_CON_STR')
+con = cx_Oracle.connect(ORACLE_CON_STR)
 print(con.version)
 con.close()
